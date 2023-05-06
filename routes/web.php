@@ -14,5 +14,4 @@ use App\Http\Controllers\ContactUsController;
 |
 */
 
-Route::get('/contact', [ContactUsController::class,'index'] );
-Route::post('/contact/create', [ContactUsController::class,'store'] );
+Route::get('contact', [ContactUsController::class, 'index']);

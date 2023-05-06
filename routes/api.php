@@ -18,6 +18,5 @@ use App\Http\Controllers\ContactUsController;
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
-Route::get('/contact', [ContactUsController::class,'index'] );
-Route::post('/contact/create', [ContactUsController::class,'store'] );
 
+Route::post('/contact/create', [ContactUsController::class, 'store']);
