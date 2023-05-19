@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\web;
+
 use App\Models\Product;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
@@ -10,12 +11,12 @@ class ServiceController extends Controller
 {
     public function index()
     {
-         $product = Product::with('media')->get();
+        $product = Product::with('media')->get();
         // $category->getFirstMediaUrl();
 
         return view('product.index', [
             'products' => $product,
-            'title' => 'Products',
+            'title'    => 'Products',
             'flashMessage' => session('success')
         ]);
     }
@@ -41,7 +42,7 @@ class ServiceController extends Controller
         $rules = [
             'name'          => ['unique:categories,name', 'required', 'string', 'min:3'],
             'discription'   => ['nullable', 'string'],
-            'category_id'   => [ 'nullable','int', 'exists:categories,id'],
+            'category_id'   => ['nullable', 'int', 'exists:categories,id'],
             'photo'         => ['nullable', 'image'],
         ];
 
@@ -55,13 +56,13 @@ class ServiceController extends Controller
         $product->addMedia($request->photo)->toMediaCollection();
 
         // PRG : Post Redirect Get
-        return redirect('/products')->with('success','Product Created!');
+        return redirect('/products')->with('success', 'Product Created!');
     }
 
 
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
+        $product    = Product::findOrFail($id);
         $categories = Category::all();
         return view('product.edit', compact('product', 'categories'));
     }
@@ -77,16 +78,17 @@ class ServiceController extends Controller
             'photo'         => ['nullable', 'image'],
         ];
 
-        $validator = $request->validate($rules);
-        $product = Product::findOrFail($id);
-        $product->name = $request->input('name');
-        $product->discription = $request->input('discription');
-        $product->category_id = $request->input('category_id');
+        $validator              = $request->validate($rules);
+        $product                = Product::findOrFail($id);
+        $product->name          = $request->name;
+        $product->discription   = $request->discription;
+        $product->category_id   = $request->category_id;
+        $product->save();
+
         if ($request->photo) {
             $product->addMedia($request->photo)->toMediaCollection();
         }
 
-        $product->save();
         return redirect('/products')->with('success', 'Product Updated!');
     }
 
@@ -95,5 +97,5 @@ class ServiceController extends Controller
     {
         Product::destroy($id);
         return redirect('/products')->with('success', 'Product deleted!');
-}
+    }
 }

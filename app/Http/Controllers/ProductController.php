@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -9,7 +10,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-         $product = Product::with('media')->get();
+        $product = Product::with('media')->get();
         // $category->getFirstMediaUrl();
 
         return view('product.index', [
@@ -40,7 +41,7 @@ class ProductController extends Controller
         $rules = [
             'name'          => ['unique:categories,name', 'required', 'string', 'min:3'],
             'discription'   => ['nullable', 'string'],
-            'category_id'   => [ 'nullable','int', 'exists:categories,id'],
+            'category_id'   => ['nullable', 'int', 'exists:categories,id'],
             'photo'         => ['nullable', 'image'],
         ];
 
@@ -54,7 +55,7 @@ class ProductController extends Controller
         $product->addMedia($request->photo)->toMediaCollection();
 
         // PRG : Post Redirect Get
-        return redirect('/products')->with('success','Product Created!');
+        return redirect('/products')->with('success', 'Product Created!');
     }
 
 
@@ -94,5 +95,5 @@ class ProductController extends Controller
     {
         Product::destroy($id);
         return redirect('/products')->with('success', 'Product deleted!');
-}
+    }
 }

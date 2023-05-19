@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\web;
+
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,8 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-         $category = Category::with('media')->get();
-        // $category->getFirstMediaUrl();
+        $category = Category::with('media')->get();
 
         return view('category.index', [
             'categories' => $category,
@@ -55,14 +55,14 @@ class HomeController extends Controller
         $category->addMedia($request->photo)->toMediaCollection();
 
         // PRG : Post Redirect Get
-        return redirect('/categories')->with('success','Category Created!');
+        return redirect('/categories')->with('success', 'Category Created!');
     }
 
 
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-        $parents = Category::all();
+        $parents  = Category::all();
         return view('category.edit', compact('category', 'parents'));
     }
 
@@ -77,16 +77,17 @@ class HomeController extends Controller
             'photo'         => ['nullable', 'image'],
         ];
 
-        $validator = $request->validate($rules);
-        $category = Category::findOrFail($id);
-        $category->name = $request->input('name');
-        $category->discription = $request->input('discription');
-        $category->parent_id = $request->input('parent_id');
+        $validator             = $request->validate($rules);
+        $category              = Category::findOrFail($id);
+        $category->name        = $request->name;
+        $category->discription = $request->discription;
+        $category->parent_id   = $request->parent_id;
+        $category->save();
+
         if ($request->photo) {
             $category->addMedia($request->photo)->toMediaCollection();
         }
 
-        $category->save();
         return redirect('/categories')->with('success', 'Category Updated!');
     }
 

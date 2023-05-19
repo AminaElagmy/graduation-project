@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\api;
+
 use App\Http\Resources\ServiceResource;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
@@ -10,12 +11,12 @@ class ServiceController extends Controller
 {
     public function show()
     {
-         $products=Product::get();
-         $products = ServiceResource::collection($products);
+        $products = Product::get();
+        $products = ServiceResource::collection($products);
 
-         return response()->json([
-            'status' => 201,
+        return response()->json([
+            'status' => 200,
             'data'   => $products,
-        ], 201);
+        ], 200);
     }
 }

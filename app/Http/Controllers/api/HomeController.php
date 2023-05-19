@@ -11,15 +11,12 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $categories = Category::with('products')->get();
+        $categories = HomeResource::collection($categories);
 
-         //  $category= DB::table('category')->get();
-
-         $categories = Category::with('products')->get();
-         $categories = HomeResource::collection($categories);
-
-         return response()->json([
-            'status' => 201,
+        return response()->json([
+            'status' => 2001,
             'data'   => $categories,
-        ], 201);
+        ], 200);
     }
 }
