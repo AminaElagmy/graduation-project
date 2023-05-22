@@ -18,7 +18,7 @@ use App\Http\Controllers\web\ServiceController;
 |
 */
 
-// Route::get('contact', [ContactUsController::class, 'index']);
+ Route::get('contact', [ContactUsController::class, 'index']);
 // Route::get('categories',[CategoryController::class,'index']);
 // Route::get('categories/create',[CategoryController::class,'create']);
 // Route::get('categories/{id}',[CategoryController::class,'show']);
